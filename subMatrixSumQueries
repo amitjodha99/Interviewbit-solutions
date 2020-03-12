@@ -1,0 +1,49 @@
+public class Solution {
+    public int[] solve(int[][] A, int[] B, int[] C, int[] D, int[] E) {
+        int n = A.length;
+        int m = A[0].length;
+        long mod = 1000000007;
+        //n are the number of rows
+        //m are the number of columns
+        //sum each row progressively
+        for(int i=0; i<n; i++){
+            int sum = 0;
+            for(int j=0; j<m; j++){
+                sum+=A[i][j];
+                A[i][j] = sum;
+            }
+        }
+        int alen = B.length; //Number of test cases
+        int answer[] = new int[alen];
+        //We just need to find answers for all alen cases
+        for(int k=0; k<alen; k++){
+            int b = B[k];
+            int c = C[k];
+            int d = D[k];
+            int e = E[k];
+            //There will be addition of d-b terms basically
+            //There will be another addition of d-b terms
+            //The difference is the answer
+            //bth row, cth term + b+1th cth....dth cth
+            b--;
+            c--;
+            d--;
+            e--;
+            //Just indexing
+            int count = d-b;
+            long lc = 0;
+            long fc = 0;
+            for(int i = b; i<=d; i++){
+                lc+=A[i][e];
+                //lc %= mod;
+                if(c!=0){
+                    fc+=A[i][c-1];
+                    //fc%=mod;
+                }
+            }
+            answer[k] = (int)((lc-fc)%mod);
+        }
+        return answer;
+        
+    }
+}
